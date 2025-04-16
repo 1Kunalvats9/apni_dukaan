@@ -7,6 +7,7 @@ import DashboardCard from '../components/DashboardCard';
 import ProductCard from '../components/ProductCard';
 import { toast } from 'react-toastify';
 import Footer from '../components/Footer';
+import Cart from '../components/Cart';
 
 const Page = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -177,14 +178,14 @@ const Page = () => {
             if (!data) {
                 toast.error("User data not available");
             }
-            if (data && data.data){
+            if (data && data.data) {
                 setUserData(data.data);
-                setProfit(data.data.profit ? data.data.profit :0);
+                setProfit(data.data.profit ? data.data.profit : 0);
                 setTotalIncome(data.data.totalIncome);
             }
         }
         fetchUser();
-    }, [cart,email]);
+    }, [cart, email]);
     const refreshProducts = async (userEmail) => {
         try {
             const res = await fetch("/api/inventory/inventoryget", {
@@ -211,15 +212,14 @@ const Page = () => {
                 }
                 throw new Error(errorMessage);
             }
-    
+
             const data = await res.json();
-            console.log(data)
             setProducts(data.products);
         } catch (error) {
             console.error("Error fetching products:", error);
         }
     };
-      
+
     const handleClick = async (e) => {
         e.preventDefault();
         if (loading) {
@@ -267,19 +267,19 @@ const Page = () => {
         <div className='bg-blue-50 min-h-[100vh]'>
             {
                 isCartOpen &&
-                <div className='w-[100vw] h-[100vh] fixed top-0 text-black z-50 flex items-center justify-start bg-white/30 backdrop-blur-2xl'>
-                    <div className='w-[3rem] absolute top-24 right-10 h-[3rem] cursor-pointer p-3 rounded-full flex items-center justify-center' onClick={() => { setIsCartOpen(false); }}>
+                <div className='w-[100vw] min-h-[100vh] fixed top-0 text-black z-50 flex items-center justify-center bg-white/30 backdrop-blur-2xl p-4 md:p-0 overflow-y-auto'>
+                    <div className='absolute top-4 right-4 md:top-8 md:right-8 w-[3rem] h-[3rem] cursor-pointer p-3 rounded-full flex items-center justify-center' onClick={() => { setIsCartOpen(false); }}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill='#000' viewBox="0 0 384 512">
                             <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
                         </svg>
                     </div>
-                    <div className="flex flex-col md:flex-row py-16 max-w-6xl w-full px-6 mx-auto">
+                    <div className="flex flex-col md:flex-row py-8 md:py-16 max-w-6xl w-full px-4 md:px-6 mx-auto">
                         <div className='flex-1 max-w-4xl'>
-                            <h1 className="text-3xl font-medium mb-6">
+                            <h1 className="text-2xl md:text-3xl font-medium mb-4 md:mb-6">
                                 Shopping Cart <span className="text-sm text-indigo-500">{cart.length} items</span>
                             </h1>
 
-                            <div className="grid grid-cols-[2fr_1fr] text-gray-500 text-base font-medium pb-3">
+                            <div className="grid grid-cols-[2fr_1fr] text-gray-500 text-sm md:text-base font-medium pb-2 md:pb-3">
                                 <p className="text-left">Product Details</p>
                                 <p className="text-center">Subtotal</p>
                             </div>
@@ -287,9 +287,9 @@ const Page = () => {
                             {
                                 cart.length > 0 ?
                                     cart.map((product, index) => (
-                                        <div key={index} className="grid grid-cols-[2fr_1fr] text-gray-500 items-center text-sm md:text-base font-medium pt-3">
+                                        <div key={index} className="grid grid-cols-[2fr_1fr] text-gray-500 items-center text-sm md:text-base font-medium pt-2 md:pt-3">
                                             <div className="flex items-center md:gap-6 gap-3">
-                                                <div className="cursor-pointer w-24 h-24 flex items-center justify-center border border-gray-300 rounded">
+                                                <div className="cursor-pointer w-20 h-20 md:w-24 md:h-24 flex items-center justify-center border border-gray-300 rounded">
                                                     <img className="max-w-full h-full object-cover" src={product.url} alt={product.name} />
                                                 </div>
                                                 <div>
@@ -307,7 +307,7 @@ const Page = () => {
                                         </div>)
                                     ) : <h1>No products in Cart</h1>}
 
-                            <button onClick={() => { setIsCartOpen(false); }} className="group cursor-pointer flex items-center mt-8 gap-2 text-indigo-500 font-medium">
+                            <button onClick={() => { setIsCartOpen(false); }} className="group cursor-pointer flex items-center mt-6 md:mt-8 gap-2 text-indigo-500 font-medium">
                                 <svg width="15" height="11" viewBox="0 0 15 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M14.09 5.5H1M6.143 10 1 5.5 6.143 1" stroke="#615fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
@@ -316,12 +316,12 @@ const Page = () => {
 
                         </div>
 
-                        <div className="max-w-[360px] w-full bg-gray-100/40 p-5 max-md:mt-16 border border-gray-300/70">
+                        <div className="max-w-[360px] w-full bg-gray-100/40 p-5 max-md:mt-8 md:mt-16 border border-gray-300/70">
                             <h2 className="text-xl md:text-xl font-medium">Order Summary</h2>
-                            <hr className="border-gray-300 my-5" />
+                            <hr className="border-gray-300 my-4 md:my-5" />
 
-                            <div className="mb-6">
-                                <p className="text-sm font-medium uppercase mt-6">Payment Method</p>
+                            <div className="mb-4 md:mb-6">
+                                <p className="text-sm font-medium uppercase mt-4 md:mt-6">Payment Method</p>
 
                                 <select className="w-full border border-gray-300 bg-white px-3 py-2 mt-2 outline-none">
                                     <option value="COD">Cash</option>
@@ -331,8 +331,8 @@ const Page = () => {
 
                             <hr className="border-gray-300" />
 
-                            <div className="text-gray-500 mt-4 space-y-2">
-                                <p className="flex justify-between text-lg font-medium mt-3">
+                            <div className="text-gray-500 mt-3 md:mt-4 space-y-2">
+                                <p className="flex justify-between text-lg font-medium mt-2 md:mt-3">
                                     <span>Total Amount:</span><span>₹{totalAmount}</span>
                                 </p>
                             </div>
@@ -341,10 +341,10 @@ const Page = () => {
                                 setCustomerPhone(e.target.value);
                             }} />
 
-                            <button className="w-full py-3 mt-6 cursor-pointer bg-indigo-500 text-white font-medium hover:bg-indigo-600 transition rounded-md" onClick={handleCheckout}>
+                            <button className="w-full py-3 mt-4 md:mt-6 cursor-pointer bg-indigo-500 text-white font-medium hover:bg-indigo-600 transition rounded-md" onClick={handleCheckout}>
                                 Checkout
                             </button>
-                            <button className="w-full rounded-md text-white bg-red-500 py-3 mt-6 cursor-pointer font-medium  hover:bg-red-600 duration-200" onClick={() => {
+                            <button className="w-full rounded-md text-white bg-red-500 py-3 mt-4 md:mt-6 cursor-pointer font-medium  hover:bg-red-600 duration-200" onClick={() => {
                                 localStorage.removeItem('cart');
                                 setCart([]);
                             }}>
@@ -423,8 +423,7 @@ const Page = () => {
                 </div>
             }
 
-            <Navbar isLoggedIn={isLoggedIn} setisCartOpen={setIsCartOpen} setCart={setCart} cartProducts={cart.length} itemAddEffect={itemAddEffect} />
-
+            <Navbar isLoggedIn={isLoggedIn} setisCartOpen={setIsCartOpen} setCart={setCart} cartProducts={cart.length} itemAddEffect={itemAddEffect} Cart={Cart} />
             <div className='w-[100vw] mt-[69px] bg-blue-50 h-auto flex flex-col gap-5 md:flex-row items-start px-5 md:px-10 py-4'>
                 <div className='w-full md:w-[60%] h-[30vh] md:h-[60vh]'>
                     <LineChart userData={userData} />
