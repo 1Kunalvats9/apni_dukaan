@@ -20,7 +20,7 @@ const Navbar = ({ isLoggedIn, setcart, cartProducts, itemAddEffect, setisCartOpe
         <nav className="flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 border-b border-gray-200 bg-white fixed top-0 left-0 w-full z-50 transition-all">
 
             <a href="#">
-                <img className="h-9" src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/dummyLogo/dummyLogoColored.svg" alt="dummyLogoColored" />
+                <img className="h-11" src="https://res.cloudinary.com/dzjlp82fv/image/upload/v1744896060/apnidukaanlogo_gp5akm.png" alt="dummyLogoColored" />
             </a>
 
             {/* Desktop Menu */}
