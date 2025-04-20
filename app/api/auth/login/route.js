@@ -30,17 +30,7 @@ export async function POST(req) {
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
           expiresIn: '7d',
         });
-
-        // Check the origin of the request to determine if it's from the web
-        const origin = headers().get('origin');
-        const isWebAppRequest = origin && origin !== `exp://127.0.0.1:${process.env.EXPO_DEV_CLIENT_PORT}`;
-
-        if (isWebAppRequest) {
-            const appRedirectUrl = `apnidukaanapp://auth/callback?token=${token}&userId=${user._id}`;
-            return NextResponse.redirect(appRedirectUrl, { status: 302 });
-        } else {
-            return NextResponse.json({ message: 'Login successful', token });
-        }
+        return NextResponse.json({ message: 'Login successful', token });
 
       } catch (error) {
         console.error('Login Error:', error);
