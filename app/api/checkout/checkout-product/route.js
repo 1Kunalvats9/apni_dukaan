@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 import User from '@/models/user';
 import Inventory from '@/models/Inventory';
 import connectDb from '@/lib/ connectDb';
+import CheckoutHistory from '@/models/checkoutHistory';
 
 export async function POST(req) {
   try {
@@ -52,6 +53,7 @@ export async function POST(req) {
     user.totalIncome += totalPrice;
     user.profit += totalProfit;
     user.checkoutHistory.push(newCheckout);
+    const checkoutHistory = await CheckoutHistory.findOne({})
     await user.save();
 
     return NextResponse.json({ message: 'Checkout successful. Inventory updated, user income and profit updated.' }, { status: 200 });

@@ -5,14 +5,12 @@ const ProductSchema = new mongoose.Schema({
   category: { type: String, required: true },
   quantity: { type: Number, required: true }, 
   retailPrice: { type: Number, required: true },
-  wholesalePrice: { type: Number, required: true },
-  url: { type: String, required: false }
+  wholesalePrice: { type: Number, required: true }
 });
 const CartItemSchema = new mongoose.Schema({
   name: { type: String, required: true },
   quantity: { type: Number, required: true, min: 1 }, 
   totalPrice: { type: Number, required: true }, 
-  imageUrl: { type: String, required: false } 
 }, { _id: false }); 
 
 const InventorySchema = new mongoose.Schema({
@@ -21,6 +19,9 @@ const InventorySchema = new mongoose.Schema({
   cart: [CartItemSchema], 
   createdAt: { type: Date, default: Date.now },
 });
+
+
+
 
 const Inventory = mongoose.models.Inventory || mongoose.model("Inventory", InventorySchema, "inventory");
 

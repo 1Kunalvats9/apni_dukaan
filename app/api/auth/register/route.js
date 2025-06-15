@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import connectDb from '@/lib/ connectDb';
+import connectDb from '@/lib/connectDb';
 import User from '@/models/user';
 import { NextResponse } from 'next/server';
 
@@ -39,7 +39,6 @@ export async function POST(req) {
 
         await newUser.save();
 
-        // Avoid sending back the full user object, especially the password hash
         const userResponse = {
             _id: newUser._id,
             shopName: newUser.shopName,

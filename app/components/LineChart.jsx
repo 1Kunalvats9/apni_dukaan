@@ -38,13 +38,13 @@ import {
 
         userData.checkoutHistory.forEach((checkout) => {
           const date = new Date(checkout.dateOfCheckout);
-          const day = date.toLocaleDateString(); // Format date as "MM/DD/YYYY" or similar based on locale
+          const day = date.toLocaleDateString();
 
           dailyIncome[day] = (dailyIncome[day] || 0) + checkout.totalPrice;
         });
 
         const chartData = Object.entries(dailyIncome)
-          .sort(([, valueA], [, valueB]) => new Date(valueA[0]) - new Date(valueB[0])) // Sort by date
+          .sort(([, valueA], [, valueB]) => new Date(valueA[0]) - new Date(valueB[0])) 
           .map(([day, total]) => ({ name: day, value: total }));
 
         setDailyIncomeData(chartData);
